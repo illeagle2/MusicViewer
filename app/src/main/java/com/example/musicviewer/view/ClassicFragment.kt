@@ -43,7 +43,7 @@ class ClassicFragment: Fragment(R.layout.fragment_classic) {
     }
 
     private fun getData(){
-        val classicList = listOf(MusicResponse("first song"), MusicResponse("second song"))
+        val classicList = listOf(MusicResponse("first classic song"), MusicResponse("second classic song"))
         adapter.updateDataSet(classicList)
 
     }
