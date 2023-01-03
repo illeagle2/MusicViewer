@@ -44,7 +44,15 @@ class RockFragment: Fragment(R.layout.fragment_rock) {
     }
 
     private fun getData(){
-        val rockList = listOf(MusicResponse("first song"), MusicResponse("second song"))
+        val rockList = listOf(MusicResponse("first rock song"),
+            MusicResponse("second rock song"),
+            MusicResponse("3 rock song"),
+            MusicResponse("4 rock song"),
+            MusicResponse("5 rock song"),
+            MusicResponse("6 rock song"),
+            MusicResponse("7 rock song"),
+            MusicResponse("8 rock song")
+            )
        adapter.updateDataSet(rockList)
 
     }

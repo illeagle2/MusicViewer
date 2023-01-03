@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.musicviewer.R
 import com.example.musicviewer.databinding.MusicItemBinding
 import com.example.musicviewer.model.MusicResponse
+import com.squareup.picasso.Picasso
 
 class MusicAdapter(
     private var dataSet: List<MusicResponse>
@@ -22,6 +23,12 @@ class MusicAdapter(
             fun onBind(musicItem: MusicResponse){
                 binding.apply {
                     tvTitle.text = musicItem.title
+                    tvGroup.text = musicItem.group
+                    tvPrice.text = musicItem.price
+                    //Picasso
+                    //load img for music cover
+                    Picasso.get()
+                        .load(musicItem.cover).into(ivArtwork)
                 }
             }
         }

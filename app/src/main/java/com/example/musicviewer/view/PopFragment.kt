@@ -43,7 +43,7 @@ class PopFragment: Fragment(R.layout.fragment_pop) {
     }
 
     private fun getData(){
-        val classicList = listOf(MusicResponse("first song"), MusicResponse("second song"))
+        val classicList = listOf(MusicResponse("first pop song"), MusicResponse("second pop song"))
         adapter.updateDataSet(classicList)
 
     }
