@@ -1,24 +1,32 @@
 package com.example.musicviewer.view
 
 import android.os.Bundle
+import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicviewer.R
 import com.example.musicviewer.databinding.FragmentRockBinding
-import com.example.musicviewer.databinding.MusicItemBinding
 import com.example.musicviewer.model.MusicResponse
+import com.example.musicviewer.model.remote.*
 import com.example.musicviewer.view.adapter.MusicAdapter
 
-class RockFragment: Fragment(R.layout.fragment_rock) {
+import retrofit2.*
+
+
+class RockFragment: Fragment(R.layout.fragment_rock){
+
+
 
     private lateinit var binding: FragmentRockBinding
-    private val adapter: MusicAdapter by lazy{
-        MusicAdapter(emptyList())
-    }
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,7 +34,6 @@ class RockFragment: Fragment(R.layout.fragment_rock) {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-
         binding = FragmentRockBinding.inflate(
             inflater,
             container,
@@ -34,26 +41,43 @@ class RockFragment: Fragment(R.layout.fragment_rock) {
         )
 
         initViews()
-        getData()
+        d("RockFragment", "After initviews")
+
         return binding.root
     }
 
-    private fun initViews() {
-        binding.rvRockSongs.layoutManager = LinearLayoutManager(context)
-        binding.rvRockSongs.adapter = adapter
-    }
+        Network().api.getRockMusic(musicTitle,
+            musicGroup,
+            musicImg,
+            musicPrice)
+            .enqueue(
+                object: Callback<MusicResponse> {
+                    override fun onResponse(
+                        call: Call<MusicResponse>,
+                        response: Response<MusicResponse>
+                    ) {
+                        if (response.isSuccessful){
+                            //data
+                        }else{
+                            //empty
+                            d( "onResponse:", response.message())
+                        }
+                    }
 
-    private fun getData(){
-        val rockList = listOf(MusicResponse("first rock song"),
-            MusicResponse("second rock song"),
-            MusicResponse("3 rock song"),
-            MusicResponse("4 rock song"),
-            MusicResponse("5 rock song"),
-            MusicResponse("6 rock song"),
-            MusicResponse("7 rock song"),
-            MusicResponse("8 rock song")
+                    override fun onFailure(call: Call<MusicResponse>, t: Throwable) {
+                        d("OnResponse", "${t.message}")
+                        t.printStackTrace()
+                    }
+
+                }
             )
-       adapter.updateDataSet(rockList)
+    }
+
+    private fun initViews() {
 
     }
-}
+
+
+}//end of class
+
+

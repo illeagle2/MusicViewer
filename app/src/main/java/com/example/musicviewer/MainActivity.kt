@@ -7,10 +7,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicviewer.databinding.ActivityMainBinding
 import com.example.musicviewer.model.MusicResponse
+import com.example.musicviewer.model.remote.BASE_URL
 import com.example.musicviewer.view.ClassicFragment
+import com.example.musicviewer.view.Communicator
 import com.example.musicviewer.view.PopFragment
 import com.example.musicviewer.view.RockFragment
 import com.example.musicviewer.view.adapter.MusicAdapter
+import retrofit2.Retrofit
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         val rockFragment = RockFragment()
         val classicFragment = ClassicFragment()
         val popFragment = PopFragment()
+        //val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
 
         setCurrentFragment(rockFragment)
 
@@ -46,4 +50,6 @@ class MainActivity : AppCompatActivity() {
         replace(R.id.flFragment, fragment)
         commit()
     }
+
+
 }
