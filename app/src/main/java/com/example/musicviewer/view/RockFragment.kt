@@ -21,12 +21,7 @@ import retrofit2.*
 
 class RockFragment: Fragment(R.layout.fragment_rock){
 
-
-
     private lateinit var binding: FragmentRockBinding
-
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,32 +41,31 @@ class RockFragment: Fragment(R.layout.fragment_rock){
         return binding.root
     }
 
-        Network().api.getRockMusic(musicTitle,
-            musicGroup,
-            musicImg,
-            musicPrice)
-            .enqueue(
-                object: Callback<MusicResponse> {
-                    override fun onResponse(
-                        call: Call<MusicResponse>,
-                        response: Response<MusicResponse>
-                    ) {
-                        if (response.isSuccessful){
-                            //data
-                        }else{
-                            //empty
-                            d( "onResponse:", response.message())
-                        }
-                    }
-
-                    override fun onFailure(call: Call<MusicResponse>, t: Throwable) {
-                        d("OnResponse", "${t.message}")
-                        t.printStackTrace()
-                    }
-
-                }
-            )
-    }
+//        Network().api.getRockMusic(musicTitle,
+//            musicGroup,
+//            musicImg,
+//            musicPrice)
+//            .enqueue(
+//                object: Callback<MusicResponse> {
+//                    override fun onResponse(
+//                        call: Call<MusicResponse>,
+//                        response: Response<MusicResponse>
+//                    ) {
+//                        if (response.isSuccessful){
+//                            //data
+//                        }else{
+//                            //empty
+//                            d( "onResponse:", response.message())
+//                        }
+//                    }
+//
+//                    override fun onFailure(call: Call<MusicResponse>, t: Throwable) {
+//                        d("OnResponse", "${t.message}")
+//                        t.printStackTrace()
+//                    }
+//
+//                }
+//            )
 
     private fun initViews() {
 

@@ -19,6 +19,7 @@ import retrofit2.Retrofit
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var musicAdapter: MusicAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
