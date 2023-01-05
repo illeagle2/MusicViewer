@@ -15,9 +15,10 @@ import com.example.musicviewer.view.adapter.MusicAdapter
 class PopFragment: Fragment(R.layout.fragment_pop) {
 
     private lateinit var binding: FragmentPopBinding
-    private val adapter: MusicAdapter by lazy{
-        MusicAdapter(emptyList())
-    }
+    private lateinit var musicAdapter: MusicAdapter
+//    private val adapter: MusicAdapter by lazy{
+//        MusicAdapter(emptyList())
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,12 +40,12 @@ class PopFragment: Fragment(R.layout.fragment_pop) {
 
     private fun initViews() {
         binding.rvPopSongs.layoutManager = LinearLayoutManager(context)
-        binding.rvPopSongs.adapter = adapter
+        binding.rvPopSongs.adapter = musicAdapter
     }
 
     private fun getData(){
-        val classicList = listOf(MusicResponse("first pop song"), MusicResponse("second pop song"))
-        adapter.updateDataSet(classicList)
+//        val classicList = listOf(MusicResponse("first pop song"), MusicResponse("second pop song"))
+//        adapter.updateDataSet(classicList)
 
     }
 }
