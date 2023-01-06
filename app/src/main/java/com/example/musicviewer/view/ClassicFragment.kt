@@ -22,9 +22,7 @@ class ClassicFragment: Fragment(R.layout.fragment_classic) {
 
     private lateinit var binding: FragmentClassicBinding
     private lateinit var musicAdapter: MusicAdapter
-//    private val adapter: MusicAdapter by lazy{
-//        MusicAdapter(emptyList())
-//    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,8 +50,7 @@ class ClassicFragment: Fragment(R.layout.fragment_classic) {
     }
 
     private fun getData(){
-//        val classicList = listOf(MusicResponse("first classic song"), MusicResponse("second classic song"))
-//        adapter.updateDataSet(classicList)
+
         lifecycleScope.launchWhenCreated {
             val response = try {
                 RetrofitInstance.api.getClassicMusic()

@@ -12,20 +12,20 @@ interface MusicService {
 //https://itunes.apple.com/search?term=classick&amp;media=music&amp;entity=song&amp;limit=50
 
     @GET(ENDPOINT)
-    fun getRockMusic(
+    suspend fun getRockMusic(
         @Query(PARAM_TERM) musicGenre: String = "rock",
         @Query(PARAM_MEDIA) musicMedia: String = "music",
         @Query(PARAM_ENTITY) musicSong: String = "song",
         @Query(PARAM_LIMIT) musicLimit: Double = 50.00
-    ): Response<List<Song>>
+    ): Response<MusicResponse>
 
     @GET(ENDPOINT)
-    fun getPopMusic(
+    suspend fun getPopMusic(
         @Query(PARAM_TERM) musicGenre: String = "pop",
         @Query(PARAM_MEDIA) musicMedia: String = "music",
         @Query(PARAM_ENTITY) musicSong: String = "song",
         @Query(PARAM_LIMIT) musicLimit: Double = 50.00
-    ): Response<List<Song>>
+    ): Response<MusicResponse>
 
     @GET(ENDPOINT)
     suspend fun getClassicMusic(
