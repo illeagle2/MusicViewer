@@ -10,9 +10,7 @@ import com.example.musicviewer.model.MusicResponse
 import com.example.musicviewer.model.Song
 import com.squareup.picasso.Picasso
 
-class MusicAdapter(
-    //private var dataSet: MutableList<MusicResponse>
-): RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
+class MusicAdapter : RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
 
 
      inner class MusicViewHolder(val binding: MusicItemBinding):
@@ -36,18 +34,6 @@ class MusicAdapter(
              }
 
 
-//            fun onBind(musicItem: Song){
-//                binding.apply {
-//                    tvTitle.text = musicItem.artistName
-//                    tvGroup.text = musicItem.collectionName
-//                    tvPrice.text = musicItem.trackPrice.toString()
-//                    //Picasso
-//                    //load img for music cover
-//                    Picasso.get()
-//                        .load(musicItem.artworkUrl60).into(ivArtwork)
-//                }
-//            }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusicAdapter.MusicViewHolder {
         return MusicViewHolder(
@@ -66,7 +52,7 @@ class MusicAdapter(
             tvTitle.text = song.artistName
             tvGroup.text = song.collectionName
             tvPrice.text = song.trackPrice.toString()
-            Picasso.get().load(song.artworkUrl60).into(ivArtwork)
+            Picasso.get().load(song.artworkUrl60).resize(300,300).into(ivArtwork)
         }
     }
 

@@ -19,7 +19,7 @@ import retrofit2.Retrofit
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var musicAdapter: MusicAdapter
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,9 +30,8 @@ class MainActivity : AppCompatActivity() {
         val rockFragment = RockFragment()
         val classicFragment = ClassicFragment()
         val popFragment = PopFragment()
-        //val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
 
-        setCurrentFragment(rockFragment)
+
 
 
         binding.bottomNavigationView.setOnItemSelectedListener { item->
