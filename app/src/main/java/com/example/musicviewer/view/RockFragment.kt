@@ -6,6 +6,7 @@ import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,13 +17,14 @@ import com.example.musicviewer.R
 import com.example.musicviewer.databinding.FragmentRockBinding
 import com.example.musicviewer.model.MusicResponse
 import com.example.musicviewer.model.remote.*
+import com.example.musicviewer.presenter.RockViewContract
 import com.example.musicviewer.view.adapter.MusicAdapter
 
 import retrofit2.*
 import java.io.IOException
 
 
-class RockFragment: Fragment(R.layout.fragment_rock){
+class RockFragment: Fragment(R.layout.fragment_rock), RockViewContract {//end of class
 
     private lateinit var binding: FragmentRockBinding
     private lateinit var musicAdapter: MusicAdapter
@@ -50,8 +52,10 @@ class RockFragment: Fragment(R.layout.fragment_rock){
 
     private fun initViews() {
         musicAdapter = MusicAdapter()
-        binding.rvRockSongs.adapter = musicAdapter
-        binding.rvRockSongs.layoutManager = LinearLayoutManager(context)
+        binding.rvRockSongs.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = musicAdapter
+        }
     }
 
     private fun getData(){
@@ -75,7 +79,23 @@ class RockFragment: Fragment(R.layout.fragment_rock){
         }
     }
 
+    override fun loading(isLoading: Boolean) {
+        Toast.makeText(requireContext(), "loading music...", Toast.LENGTH_LONG).show()
+    }
 
-}//end of class
+    override fun error(e: Exception) {
+        TODO("Not yet implemented")
+    }
+
+    override fun success(musicResponse: MusicResponse) {
+        musicAdapter = MusicAdapter()
+    }
+
+    override fun displayWarningMessage(message: String) {
+        TODO("Not yet implemented")
+    }
+
+
+}
 
 
