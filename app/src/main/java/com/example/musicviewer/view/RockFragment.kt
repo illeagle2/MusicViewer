@@ -1,5 +1,6 @@
 package com.example.musicviewer.view
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.util.Log.d
@@ -17,6 +18,8 @@ import com.example.musicviewer.R
 import com.example.musicviewer.databinding.FragmentRockBinding
 import com.example.musicviewer.model.MusicResponse
 import com.example.musicviewer.model.remote.*
+import com.example.musicviewer.presenter.RockPresenter
+import com.example.musicviewer.presenter.RockPresenterContract
 import com.example.musicviewer.presenter.RockViewContract
 import com.example.musicviewer.view.adapter.MusicAdapter
 
@@ -24,10 +27,13 @@ import retrofit2.*
 import java.io.IOException
 
 
-class RockFragment: Fragment(R.layout.fragment_rock), RockViewContract {//end of class
+class RockFragment: Fragment(R.layout.fragment_rock), RockViewContract {
 
     private lateinit var binding: FragmentRockBinding
     private lateinit var musicAdapter: MusicAdapter
+    private val presenter: RockPresenterContract by lazy {
+        RockPresenter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,8 +48,12 @@ class RockFragment: Fragment(R.layout.fragment_rock), RockViewContract {//end of
             false
         )
 
+        presenter.initialisePresenter(this)
+        presenter.getRockMusic(lifecycleScope)
+
         initViews()
-        getData()
+
+        //getData()
         d("RockFragment", "After initviews")
 
         return binding.root
@@ -57,6 +67,8 @@ class RockFragment: Fragment(R.layout.fragment_rock), RockViewContract {//end of
             adapter = musicAdapter
         }
     }
+
+
 
     private fun getData(){
 
@@ -84,11 +96,21 @@ class RockFragment: Fragment(R.layout.fragment_rock), RockViewContract {//end of
     }
 
     override fun error(e: Exception) {
-        TODO("Not yet implemented")
+        AlertDialog.Builder(requireActivity())
+            .setTitle("Error has occurred")
+            .setMessage("${e.message}")
+            .setPositiveButton("OK") { dialogInterface, _ ->
+                dialogInterface.dismiss()
+            }
+            .setNegativeButton("CANCEL") {dialogInterface, _ ->
+                dialogInterface.dismiss()
+            }
+            .create()
+            .show()
     }
 
     override fun success(musicResponse: MusicResponse) {
-        musicAdapter = MusicAdapter()
+        musicAdapter.songs = musicResponse.results
     }
 
     override fun displayWarningMessage(message: String) {
@@ -96,6 +118,6 @@ class RockFragment: Fragment(R.layout.fragment_rock), RockViewContract {//end of
     }
 
 
-}
+}//end of class
 
 
