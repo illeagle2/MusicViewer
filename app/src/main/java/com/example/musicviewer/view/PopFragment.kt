@@ -1,10 +1,12 @@
 package com.example.musicviewer.view
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,14 +15,20 @@ import com.example.musicviewer.databinding.FragmentClassicBinding
 import com.example.musicviewer.databinding.FragmentPopBinding
 import com.example.musicviewer.model.MusicResponse
 import com.example.musicviewer.model.remote.RetrofitInstance
+import com.example.musicviewer.presenter.PopPresenter
+import com.example.musicviewer.presenter.PopPresenterContract
+import com.example.musicviewer.presenter.PopViewContract
 import com.example.musicviewer.view.adapter.MusicAdapter
 import retrofit2.HttpException
 import java.io.IOException
 
-class PopFragment: Fragment(R.layout.fragment_pop) {
+class PopFragment: Fragment(R.layout.fragment_pop), PopViewContract {
 
     private lateinit var binding: FragmentPopBinding
     private lateinit var musicAdapter: MusicAdapter
+    private val presenter: PopPresenterContract by lazy {
+        PopPresenter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,35 +43,45 @@ class PopFragment: Fragment(R.layout.fragment_pop) {
             false
         )
 
+        presenter.initialisePresenter(this)
+        presenter.getPopMusic(lifecycleScope)
+
         initViews()
-        getData()
+
         return binding.root
     }
 
     private fun initViews() {
         musicAdapter = MusicAdapter()
-        binding.rvPopSongs.layoutManager = LinearLayoutManager(context)
-        binding.rvPopSongs.adapter = musicAdapter
+        binding.rvPopSongs.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = musicAdapter
+        }
     }
 
-    private fun getData(){
+    override fun loading(isLoading: Boolean) {
+        Toast.makeText(requireContext(), "loading music...", Toast.LENGTH_LONG).show()
+    }
 
-        lifecycleScope.launchWhenCreated {
-            val response = try {
-                RetrofitInstance.api.getPopMusic()
-            } catch (e: IOException){
-                Log.e("PopFragment", "Missing internet connection")
-                return@launchWhenCreated
-            } catch (e: HttpException){
-                Log.e("PopFragment", "unexpected response")
-                return@launchWhenCreated
+    override fun error(e: Exception) {
+        AlertDialog.Builder(requireActivity())
+            .setTitle("Error has occurred")
+            .setMessage("${e.message}")
+            .setPositiveButton("OK") { dialogInterface, _ ->
+                dialogInterface.dismiss()
             }
-            if (response.isSuccessful && response.body() != null){
-                //good response
-                musicAdapter.songs = response.body()!!.results
-            } else{
-                Log.e("PopFragment", "Response not successful")
+            .setNegativeButton("CANCEL") {dialogInterface, _ ->
+                dialogInterface.dismiss()
             }
-        }
+            .create()
+            .show()
+    }
+
+    override fun success(musicResponse: MusicResponse) {
+        musicAdapter.songs = musicResponse.results
+    }
+
+    override fun displayWarningMessage(message: String) {
+        TODO("Not yet implemented")
     }
 }

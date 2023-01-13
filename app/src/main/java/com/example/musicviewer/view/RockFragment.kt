@@ -53,7 +53,6 @@ class RockFragment: Fragment(R.layout.fragment_rock), RockViewContract {
 
         initViews()
 
-        //getData()
         d("RockFragment", "After initviews")
 
         return binding.root
@@ -69,27 +68,6 @@ class RockFragment: Fragment(R.layout.fragment_rock), RockViewContract {
     }
 
 
-
-    private fun getData(){
-
-        lifecycleScope.launchWhenCreated {
-            val response = try {
-                RetrofitInstance.api.getRockMusic()
-            } catch (e: IOException){
-                Log.e("RockFragment", "Missing internet connection")
-                return@launchWhenCreated
-            } catch (e: HttpException){
-                Log.e("RockFragment", "unexpected response")
-                return@launchWhenCreated
-            }
-            if (response.isSuccessful && response.body() != null){
-                //good response
-                musicAdapter.songs = response.body()!!.results
-            } else{
-                Log.e("RockFragment", "Response not successful")
-            }
-        }
-    }
 
     override fun loading(isLoading: Boolean) {
         Toast.makeText(requireContext(), "loading music...", Toast.LENGTH_LONG).show()

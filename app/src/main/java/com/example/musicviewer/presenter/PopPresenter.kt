@@ -18,11 +18,11 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 
-class RockPresenter: RockPresenterContract {
+class PopPresenter: PopPresenterContract {
 
-    private var viewContract: RockViewContract? = null
+    private var viewContract: PopViewContract? = null
 
-    override fun initialisePresenter(viewContract: RockViewContract) {
+    override fun initialisePresenter(viewContract: PopViewContract) {
         this.viewContract = viewContract
     }
 
@@ -34,13 +34,13 @@ class RockPresenter: RockPresenterContract {
         viewContract?.displayWarningMessage("Check network connection")
     }
 
-    override fun getRockMusic(lifecycleCoroutineScope: LifecycleCoroutineScope) {
+    override fun getPopMusic(lifecycleCoroutineScope: LifecycleCoroutineScope) {
 
         viewContract?.loading(true)
 
         lifecycleCoroutineScope.launchWhenCreated {
             val response = try {
-                RetrofitInstance.api.getRockMusic()
+                RetrofitInstance.api.getPopMusic()
             } catch (e: IOException){
                 Log.e("RockFragment", "Missing internet connection")
                 return@launchWhenCreated
@@ -51,7 +51,7 @@ class RockPresenter: RockPresenterContract {
             if (response.isSuccessful && response.body() != null){
                 //good response
                 viewContract?.success(response.body()!!)
-                //musicAdapter.songs = response.body()!!.results
+
             } else{
                 Log.e("RockFragment", "Response not successful")
             }
@@ -59,16 +59,16 @@ class RockPresenter: RockPresenterContract {
     }
 }
 
-interface RockViewContract {
+interface PopViewContract {
     fun loading (isLoading: Boolean)
     fun error (e: Exception)
     fun success(musicResponse: MusicResponse)
     fun displayWarningMessage (message: String)
 }
 
-interface RockPresenterContract{
-    fun initialisePresenter(viewContract: RockViewContract)
+interface PopPresenterContract{
+    fun initialisePresenter(viewContract: PopViewContract)
     fun destroyPresenter()
-    fun getRockMusic(lifecycleCoroutineScope: LifecycleCoroutineScope)
+    fun getPopMusic(lifecycleCoroutineScope: LifecycleCoroutineScope)
     fun checkNetworkConnection()
 }
