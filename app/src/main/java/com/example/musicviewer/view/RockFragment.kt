@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.PackageManagerCompat.LOG_TAG
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -65,6 +66,12 @@ class RockFragment: Fragment(R.layout.fragment_rock), RockViewContract {
             layoutManager = LinearLayoutManager(context)
             adapter = musicAdapter
         }
+        binding.swipeContainer.setOnRefreshListener {
+            Toast.makeText(requireContext(), "REFRESH", Toast.LENGTH_SHORT).show()
+            musicAdapter.songs = emptyList()
+            presenter.getRockMusic(lifecycleScope)
+            //binding.swipeContainer.isRefreshing = false
+        }
     }
 
 
@@ -89,8 +96,10 @@ class RockFragment: Fragment(R.layout.fragment_rock), RockViewContract {
 
     override fun success(musicResponse: MusicResponse) {
         musicAdapter.songs = musicResponse.results
+        if (binding.swipeContainer.isRefreshing){
+            binding.swipeContainer.isRefreshing = false
+        }
     }
-
     override fun displayWarningMessage(message: String) {
         TODO("Not yet implemented")
     }

@@ -57,6 +57,13 @@ class PopFragment: Fragment(R.layout.fragment_pop), PopViewContract {
             layoutManager = LinearLayoutManager(context)
             adapter = musicAdapter
         }
+        binding.swipeContainer2.setOnRefreshListener {
+            Toast.makeText(requireContext(), "REFRESH", Toast.LENGTH_SHORT).show()
+            //myUpdateOperation()
+            musicAdapter.songs = emptyList()
+            presenter.getPopMusic(lifecycleScope)
+            //binding.swipeContainer2.isRefreshing = false
+        }
     }
 
     override fun loading(isLoading: Boolean) {
@@ -79,6 +86,9 @@ class PopFragment: Fragment(R.layout.fragment_pop), PopViewContract {
 
     override fun success(musicResponse: MusicResponse) {
         musicAdapter.songs = musicResponse.results
+        if (binding.swipeContainer2.isRefreshing){
+            binding.swipeContainer2.isRefreshing = false
+        }
     }
 
     override fun displayWarningMessage(message: String) {

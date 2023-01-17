@@ -61,7 +61,14 @@ class ClassicFragment: Fragment(R.layout.fragment_classic), ClassicViewContract 
             adapter = musicAdapter
             layoutManager = LinearLayoutManager(context)
         }
+        binding.swipeContainer3.setOnRefreshListener {
+            Toast.makeText(requireContext(), "REFRESH", Toast.LENGTH_SHORT).show()
+            musicAdapter.songs = emptyList()
+            presenter.getClassicMusic(lifecycleScope)
+            //binding.swipeContainer3.isRefreshing = false
+        }
     }
+
 
     override fun loading(isLoading: Boolean) {
         Toast.makeText(requireContext(), "loading music...", Toast.LENGTH_LONG).show()
@@ -83,6 +90,9 @@ class ClassicFragment: Fragment(R.layout.fragment_classic), ClassicViewContract 
 
     override fun success(musicResponse: MusicResponse) {
         musicAdapter.songs = musicResponse.results
+        if (binding.swipeContainer3.isRefreshing){
+            binding.swipeContainer3.isRefreshing = false
+        }
     }
 
     override fun displayWarningMessage(message: String) {

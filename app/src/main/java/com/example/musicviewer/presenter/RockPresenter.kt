@@ -42,18 +42,18 @@ class RockPresenter: RockPresenterContract {
             val response = try {
                 RetrofitInstance.api.getRockMusic()
             } catch (e: IOException){
-                Log.e("RockFragment", "Missing internet connection")
+                Log.e("RockPresenter", "Missing internet connection")
                 return@launchWhenCreated
             } catch (e: HttpException){
-                Log.e("RockFragment", "unexpected response")
+                Log.e("RockPresenter", "unexpected response")
                 return@launchWhenCreated
             }
             if (response.isSuccessful && response.body() != null){
                 //good response
                 viewContract?.success(response.body()!!)
-                //musicAdapter.songs = response.body()!!.results
+
             } else{
-                Log.e("RockFragment", "Response not successful")
+                Log.e("RockPresenter", "Response not successful")
             }
         }
     }

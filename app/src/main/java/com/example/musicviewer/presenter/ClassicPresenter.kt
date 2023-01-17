@@ -42,10 +42,10 @@ class ClassicPresenter: ClassicPresenterContract {
             val response = try {
                 RetrofitInstance.api.getClassicMusic()
             } catch (e: IOException){
-                Log.e("RockFragment", "Missing internet connection")
+                Log.e("ClassicPresenter", "Missing internet connection")
                 return@launchWhenCreated
             } catch (e: HttpException){
-                Log.e("RockFragment", "unexpected response")
+                Log.e("ClassicPresenter", "unexpected response")
                 return@launchWhenCreated
             }
             if (response.isSuccessful && response.body() != null){
@@ -53,7 +53,7 @@ class ClassicPresenter: ClassicPresenterContract {
                 viewContract?.success(response.body()!!)
 
             } else{
-                Log.e("RockFragment", "Response not successful")
+                Log.e("ClassicPresenter", "Response not successful")
             }
         }
     }

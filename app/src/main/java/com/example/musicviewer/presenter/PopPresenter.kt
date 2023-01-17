@@ -42,10 +42,10 @@ class PopPresenter: PopPresenterContract {
             val response = try {
                 RetrofitInstance.api.getPopMusic()
             } catch (e: IOException){
-                Log.e("RockFragment", "Missing internet connection")
+                Log.e("PopPresenter", "Missing internet connection")
                 return@launchWhenCreated
             } catch (e: HttpException){
-                Log.e("RockFragment", "unexpected response")
+                Log.e("PopPresenter", "unexpected response")
                 return@launchWhenCreated
             }
             if (response.isSuccessful && response.body() != null){
@@ -53,7 +53,7 @@ class PopPresenter: PopPresenterContract {
                 viewContract?.success(response.body()!!)
 
             } else{
-                Log.e("RockFragment", "Response not successful")
+                Log.e("PopPresenter", "Response not successful")
             }
         }
     }
