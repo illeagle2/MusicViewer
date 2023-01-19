@@ -1,6 +1,7 @@
 package com.example.musicviewer.view
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musicviewer.R
 import com.example.musicviewer.databinding.FragmentClassicBinding
 import com.example.musicviewer.databinding.FragmentPopBinding
+import com.example.musicviewer.di.MusicViewerApp
 import com.example.musicviewer.model.MusicResponse
 import com.example.musicviewer.model.remote.RetrofitInstance
 import com.example.musicviewer.presenter.PopPresenter
@@ -21,13 +23,19 @@ import com.example.musicviewer.presenter.PopViewContract
 import com.example.musicviewer.view.adapter.MusicAdapter
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
 class PopFragment: Fragment(R.layout.fragment_pop), PopViewContract {
 
     private lateinit var binding: FragmentPopBinding
     private lateinit var musicAdapter: MusicAdapter
-    private val presenter: PopPresenterContract by lazy {
-        PopPresenter()
+
+    @Inject
+    lateinit var presenter: PopPresenterContract
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        MusicViewerApp.musicComponent.inject(this)
     }
 
     override fun onCreateView(
@@ -92,6 +100,6 @@ class PopFragment: Fragment(R.layout.fragment_pop), PopViewContract {
     }
 
     override fun displayWarningMessage(message: String) {
-        TODO("Not yet implemented")
+
     }
 }

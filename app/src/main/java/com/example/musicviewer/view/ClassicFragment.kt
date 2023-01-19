@@ -1,6 +1,7 @@
 package com.example.musicviewer.view
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.util.Log.e
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musicviewer.R
 import com.example.musicviewer.databinding.FragmentClassicBinding
 import com.example.musicviewer.databinding.FragmentRockBinding
+import com.example.musicviewer.di.MusicViewerApp
 import com.example.musicviewer.model.MusicResponse
 import com.example.musicviewer.model.remote.RetrofitInstance
 import com.example.musicviewer.presenter.ClassicPresenter
@@ -22,13 +24,19 @@ import com.example.musicviewer.presenter.ClassicViewContract
 import com.example.musicviewer.view.adapter.MusicAdapter
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
 class ClassicFragment: Fragment(R.layout.fragment_classic), ClassicViewContract {
 
     private lateinit var binding: FragmentClassicBinding
     private lateinit var musicAdapter: MusicAdapter
-    private val presenter: ClassicPresenterContract by lazy {
-        ClassicPresenter()
+
+    @Inject
+    lateinit var presenter: ClassicPresenterContract
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        MusicViewerApp.musicComponent.inject(this)
     }
 
 
@@ -96,7 +104,7 @@ class ClassicFragment: Fragment(R.layout.fragment_classic), ClassicViewContract 
     }
 
     override fun displayWarningMessage(message: String) {
-        TODO("Not yet implemented")
+
     }
 
 

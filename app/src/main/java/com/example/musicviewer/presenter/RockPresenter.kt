@@ -17,8 +17,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
-class RockPresenter: RockPresenterContract {
+class RockPresenter @Inject constructor(
+    private val serviceAPI: MusicService
+): RockPresenterContract {
 
     private var viewContract: RockViewContract? = null
 
@@ -40,7 +43,7 @@ class RockPresenter: RockPresenterContract {
 
         lifecycleCoroutineScope.launchWhenCreated {
             val response = try {
-                RetrofitInstance.api.getRockMusic()
+                serviceAPI.getRockMusic()
             } catch (e: IOException){
                 Log.e("RockPresenter", "Missing internet connection")
                 return@launchWhenCreated

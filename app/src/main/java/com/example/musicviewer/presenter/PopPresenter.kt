@@ -17,8 +17,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
-class PopPresenter: PopPresenterContract {
+class PopPresenter @Inject constructor(
+    private val serviceAPI: MusicService
+): PopPresenterContract {
 
     private var viewContract: PopViewContract? = null
 
@@ -40,7 +43,7 @@ class PopPresenter: PopPresenterContract {
 
         lifecycleCoroutineScope.launchWhenCreated {
             val response = try {
-                RetrofitInstance.api.getPopMusic()
+                serviceAPI.getPopMusic()
             } catch (e: IOException){
                 Log.e("PopPresenter", "Missing internet connection")
                 return@launchWhenCreated

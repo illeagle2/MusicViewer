@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicviewer.databinding.ActivityMainBinding
+import com.example.musicviewer.di.MusicViewerApp
 import com.example.musicviewer.model.MusicResponse
 import com.example.musicviewer.model.remote.BASE_URL
 import com.example.musicviewer.view.ClassicFragment
@@ -26,6 +27,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        MusicViewerApp.musicComponent.inject(this)
+
 
         val rockFragment = RockFragment()
         val classicFragment = ClassicFragment()

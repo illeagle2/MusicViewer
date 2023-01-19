@@ -61,7 +61,8 @@ class MusicAdapter : RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
             val song = songs[position]
             tvTitle.text = song.artistName
             tvGroup.text = song.collectionName
-            tvPrice.text = song.trackPrice.toString()
+            tvPrice.text = song.trackPrice.toString() + " USD"
+            //tvPrice.text = "$text USD"
             Picasso.get().load(song.artworkUrl100).resize(300,300).into(ivArtwork)
         }
 
