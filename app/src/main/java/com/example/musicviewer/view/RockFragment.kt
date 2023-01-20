@@ -25,7 +25,7 @@ class RockFragment: Fragment(R.layout.fragment_rock), RockViewContract {
 
     private lateinit var binding: FragmentRockBinding
     private lateinit var musicAdapter: MusicAdapter
-
+//push to master
     @Inject
     lateinit var presenter: RockPresenterContract
 
