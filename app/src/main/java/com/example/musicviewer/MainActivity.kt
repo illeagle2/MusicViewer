@@ -3,18 +3,11 @@ package com.example.musicviewer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.musicviewer.databinding.ActivityMainBinding
 import com.example.musicviewer.di.MusicViewerApp
-import com.example.musicviewer.model.MusicResponse
-import com.example.musicviewer.model.remote.BASE_URL
 import com.example.musicviewer.view.ClassicFragment
-import com.example.musicviewer.view.Communicator
 import com.example.musicviewer.view.PopFragment
 import com.example.musicviewer.view.RockFragment
-import com.example.musicviewer.view.adapter.MusicAdapter
-import retrofit2.Retrofit
 
 
 class MainActivity : AppCompatActivity() {

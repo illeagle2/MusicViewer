@@ -2,21 +2,14 @@ package com.example.musicviewer.view.adapter
 
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.musicviewer.databinding.MusicItemBinding
-import com.example.musicviewer.model.MusicResponse
 import com.example.musicviewer.model.Song
-import com.example.musicviewer.view.ClassicFragment
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.NonDisposableHandle.parent
 
 class MusicAdapter : RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
 
@@ -62,7 +55,6 @@ class MusicAdapter : RecyclerView.Adapter<MusicAdapter.MusicViewHolder>() {
             tvTitle.text = song.artistName
             tvGroup.text = song.collectionName
             tvPrice.text = song.trackPrice.toString() + " USD"
-            //tvPrice.text = "$text USD"
             Picasso.get().load(song.artworkUrl100).resize(300,300).into(ivArtwork)
         }
 

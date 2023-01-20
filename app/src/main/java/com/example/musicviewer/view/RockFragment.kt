@@ -79,7 +79,7 @@ class RockFragment: Fragment(R.layout.fragment_rock), RockViewContract {
             Toast.makeText(requireContext(), "REFRESH", Toast.LENGTH_SHORT).show()
             musicAdapter.songs = emptyList()
             presenter.getRockMusic(lifecycleScope)
-            //binding.swipeContainer.isRefreshing = false
+
         }
     }
 
@@ -109,11 +109,6 @@ class RockFragment: Fragment(R.layout.fragment_rock), RockViewContract {
             binding.swipeContainer.isRefreshing = false
         }
     }
-    override fun displayWarningMessage(message: String) {
-
-    }
-
-
 }//end of class
 
 

@@ -1,20 +1,9 @@
 package com.example.musicviewer.presenter
 
-import android.content.ContentValues
 import android.util.Log
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
-import androidx.lifecycle.coroutineScope
-import androidx.lifecycle.lifecycleScope
 import com.example.musicviewer.model.MusicResponse
 import com.example.musicviewer.model.remote.MusicService
-import com.example.musicviewer.model.remote.RetrofitInstance
-import com.example.musicviewer.utils.FailureResponseException
-import com.example.musicviewer.utils.NullResponseException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -33,9 +22,6 @@ class PopPresenter @Inject constructor(
         viewContract = null
     }
 
-    override fun checkNetworkConnection() {
-        viewContract?.displayWarningMessage("Check network connection")
-    }
 
     override fun getPopMusic(lifecycleCoroutineScope: LifecycleCoroutineScope) {
 
@@ -66,12 +52,10 @@ interface PopViewContract {
     fun loading (isLoading: Boolean)
     fun error (e: Exception)
     fun success(musicResponse: MusicResponse)
-    fun displayWarningMessage (message: String)
 }
 
 interface PopPresenterContract{
     fun initialisePresenter(viewContract: PopViewContract)
     fun destroyPresenter()
     fun getPopMusic(lifecycleCoroutineScope: LifecycleCoroutineScope)
-    fun checkNetworkConnection()
 }

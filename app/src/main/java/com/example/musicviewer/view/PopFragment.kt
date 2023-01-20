@@ -3,7 +3,6 @@ package com.example.musicviewer.view
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,17 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musicviewer.R
-import com.example.musicviewer.databinding.FragmentClassicBinding
 import com.example.musicviewer.databinding.FragmentPopBinding
 import com.example.musicviewer.di.MusicViewerApp
 import com.example.musicviewer.model.MusicResponse
-import com.example.musicviewer.model.remote.RetrofitInstance
-import com.example.musicviewer.presenter.PopPresenter
 import com.example.musicviewer.presenter.PopPresenterContract
 import com.example.musicviewer.presenter.PopViewContract
 import com.example.musicviewer.view.adapter.MusicAdapter
-import retrofit2.HttpException
-import java.io.IOException
 import javax.inject.Inject
 
 class PopFragment: Fragment(R.layout.fragment_pop), PopViewContract {
@@ -67,10 +61,8 @@ class PopFragment: Fragment(R.layout.fragment_pop), PopViewContract {
         }
         binding.swipeContainer2.setOnRefreshListener {
             Toast.makeText(requireContext(), "REFRESH", Toast.LENGTH_SHORT).show()
-            //myUpdateOperation()
             musicAdapter.songs = emptyList()
             presenter.getPopMusic(lifecycleScope)
-            //binding.swipeContainer2.isRefreshing = false
         }
     }
 
@@ -97,9 +89,5 @@ class PopFragment: Fragment(R.layout.fragment_pop), PopViewContract {
         if (binding.swipeContainer2.isRefreshing){
             binding.swipeContainer2.isRefreshing = false
         }
-    }
-
-    override fun displayWarningMessage(message: String) {
-
     }
 }

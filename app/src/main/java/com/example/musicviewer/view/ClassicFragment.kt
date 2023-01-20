@@ -3,8 +3,6 @@ package com.example.musicviewer.view
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,16 +12,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musicviewer.R
 import com.example.musicviewer.databinding.FragmentClassicBinding
-import com.example.musicviewer.databinding.FragmentRockBinding
 import com.example.musicviewer.di.MusicViewerApp
 import com.example.musicviewer.model.MusicResponse
-import com.example.musicviewer.model.remote.RetrofitInstance
-import com.example.musicviewer.presenter.ClassicPresenter
 import com.example.musicviewer.presenter.ClassicPresenterContract
 import com.example.musicviewer.presenter.ClassicViewContract
 import com.example.musicviewer.view.adapter.MusicAdapter
-import retrofit2.HttpException
-import java.io.IOException
 import javax.inject.Inject
 
 class ClassicFragment: Fragment(R.layout.fragment_classic), ClassicViewContract {
@@ -73,7 +66,6 @@ class ClassicFragment: Fragment(R.layout.fragment_classic), ClassicViewContract 
             Toast.makeText(requireContext(), "REFRESH", Toast.LENGTH_SHORT).show()
             musicAdapter.songs = emptyList()
             presenter.getClassicMusic(lifecycleScope)
-            //binding.swipeContainer3.isRefreshing = false
         }
     }
 
@@ -103,9 +95,6 @@ class ClassicFragment: Fragment(R.layout.fragment_classic), ClassicViewContract 
         }
     }
 
-    override fun displayWarningMessage(message: String) {
-
-    }
 
 
 }
